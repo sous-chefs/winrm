@@ -19,7 +19,7 @@
 
 powershell "search-for-thumbprint" do
   cwd Chef::Config[:file_cache_path]
-  code "Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{node.fqdn} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()} | Out-File -Encoding \"ASCII\" winrm.thumbprint"
+  code "Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{node['fqdn']} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()} | Out-File -Encoding \"ASCII\" winrm.thumbprint"
   only_if { node['winrm']['thumbprint'].nil? && node['winrm']['https']}
   notifies :create, "file[fix-perms-thumbprint]", :immediately
 end
@@ -48,7 +48,7 @@ cookbook_file "#{Chef::Config[:file_cache_path]}\\selfssl.exe" do
 end
 
 execute "create-certificate" do
-  command "#{Chef::Config[:file_cache_path]}\\selfssl.exe /T /N:cn=#{node.fqdn} /V:3650 /Q"
+  command "#{Chef::Config[:file_cache_path]}\\selfssl.exe /T /N:cn=#{node['fqdn']} /V:3650 /Q"
   only_if { node['winrm']['https'] && node['winrm']['thumbprint'].nil? }
   notifies :run, "powershell[search-for-thumbprint]", :immediately
   notifies :create, "ruby_block[read-winrm-thumbprint]", :immediately
@@ -62,7 +62,7 @@ end
 
 
 powershell "winrm-create-https-listener" do
-  code "winrm create 'winrm/config/Listener?Address=*+Transport=HTTPS' '@{Hostname=\"#{node.fqdn}\"; CertificateThumbprint=\"#{node['winrm']['thumbprint']}\"}'"
+  code "winrm create 'winrm/config/Listener?Address=*+Transport=HTTPS' '@{Hostname=\"#{node['fqdn']}\"; CertificateThumbprint=\"#{node['winrm']['thumbprint']}\"}'"
   only_if { node['winrm']['https'] && !File.zero?("#{Chef::Config[:file_cache_path]}\\winrm.thumbprint") }
 end
 
@@ -89,13 +89,13 @@ powershell "winrm-winrs-trustedhosts" do
 end
 
 powershell "winrm-http-listener" do
-  code "winrm set winrm/config/Listener?Address=*+Transport=HTTP '@{Hostname=\"#{node.fqdn}\"}'"
+  code "winrm set winrm/config/Listener?Address=*+Transport=HTTP '@{Hostname=\"#{node['fqdn']}\"}'"
   only_if { node['winrm']['http'] }
 end
 
 
 powershell "winrm-https-listener" do
-  code "winrm set 'winrm/config/Listener?Address=*+Transport=HTTPS' '@{Hostname=\"#{node.fqdn}\"; CertificateThumbprint=\"#{node['winrm']['thumbprint']}\"}'"
+  code "winrm set 'winrm/config/Listener?Address=*+Transport=HTTPS' '@{Hostname=\"#{node['fqdn']}\"; CertificateThumbprint=\"#{node['winrm']['thumbprint']}\"}'"
   only_if { node['winrm']['https'] && !node['winrm']['thumbprint'].nil? }
 end
 
