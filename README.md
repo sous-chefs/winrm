@@ -2,6 +2,8 @@ WinRM Cookbook
 ================
 Installs and configures WinRM on a Windows System 
 
+[![Code Climate](https://codeclimate.com/github/Webtrends/winrm.png)](https://codeclimate.com/github/Webtrends/winrm)
+
 Requirements
 ------------
 ### Platform
