@@ -1,7 +1,9 @@
+sudo: false
+cache: bundler
 language: ruby
-gemfile:
-   - test/support/Gemfile
+bundler_args: --without kitchen_common kitchen_vagrant
 rvm:
-  - 1.9.2
-  - 1.9.3
+  - 2.0
+  - 2.1
+  - 2.2
 script: bundle exec rake foodcritic
