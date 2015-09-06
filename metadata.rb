@@ -8,3 +8,5 @@ version          '1.0.0'
 supports         'windows'
 depends          'windows'
 depends          'powershell'
+source_url       'https://github.com/webtrends/winrm' if respond_to?(:source_url)
+issues_url       'https://github.com/webtrends/winrm/issues' if respond_to?(:issues_url)
