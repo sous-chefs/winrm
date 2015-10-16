@@ -5,4 +5,4 @@ default['winrm']['http'] = true
 default['winrm']['BasicAuth'] = true
 default['winrm']['MaxMemoryPerShellMB'] = 1024
 default['winrm']['AllowUnencrypted'] = true
-default['winrm']['TrustedHosts'] =  '*'
+default['winrm']['TrustedHosts'] = '*'
