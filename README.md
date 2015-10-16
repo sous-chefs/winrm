@@ -2,7 +2,7 @@ WinRM Cookbook
 ================
 Installs and configures WinRM on a Windows System 
 
-[![Build Status](https://travis-ci.org/Webtrends/winrm.png?branch=master)](https://travis-ci.org/Webtrends/winrm) [![Code Climate](https://codeclimate.com/github/Webtrends/winrm.png)](https://codeclimate.com/github/Webtrends/winrm) [![Cookbook Version](https://img.shields.io/cookbook/v/winrm.svg)](https://supermarket.chef.io/cookbooks/winrm)
+[![Build Status](https://travis-ci.org/Webtrends/winrm.svg?branch=master)](https://travis-ci.org/Webtrends/winrm) [![Code Climate](https://codeclimate.com/github/Webtrends/winrm.svg)](https://codeclimate.com/github/Webtrends/winrm) [![Cookbook Version](https://img.shields.io/cookbook/v/winrm.svg)](https://supermarket.chef.io/cookbooks/winrm)
 
 Requirements
 ------------
