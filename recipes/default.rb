@@ -28,7 +28,7 @@ file 'fix-perms-thumbprint' do
   action :nothing
   path "#{Chef::Config[:file_cache_path]}\\winrm.thumbprint"
   backup false
-  rights :read, 'Everyone'
+  rights :read, node['winrm']['Everyone_Group']
 end
 
 ruby_block 'read-winrm-thumbprint' do
