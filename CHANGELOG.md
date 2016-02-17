@@ -1,3 +1,6 @@
+## 1.0.2
+* Added configurable Everyone group attribute
+
 ## 1.0.1 (10-16-2015)
 * Added Kitchen CI config
 * Added rubocop config
