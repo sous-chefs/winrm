@@ -35,16 +35,13 @@ action :create do
   Chef::Log.warn(load_thumbprint)
 
   # If no certificate found and generateCert is true try to generate a self signed cert
-  if new_resource.HTTPS && thumbprint.nil? && load_thumbprint.nil?
+  if new_resource.HTTPS && new_resource.Thumbprint.nil? && load_thumbprint.nil?
     cookbook_file "#{Chef::Config[:file_cache_path]}\\selfssl.exe" do
       source 'selfssl.exe'
     end
 
     execute 'create-certificate' do
       command "#{Chef::Config[:file_cache_path]}\\selfssl.exe /T /N:cn=#{new_resource.Hostname} /V:3650 /Q"
-      notifies :run, 'powershell_script[search-for-thumbprint]', :immediately
-      notifies :create, 'ruby_block[read-winrm-thumbprint]', :immediately
-      notifies :delete, 'file[cleanup-thumbprint]', :immediately
     end
   end
 
@@ -53,12 +50,7 @@ action :create do
   Chef::Log.warn('load_thumbprint2')
   Chef::Log.warn(load_thumbprint)
 
-  thumbprint =
-    if new_resource.Thumbprint.nil?
-      load_thumbprint
-    else
-      new_resource.Thumbprint
-    end
+  thumbprint = new_resource.Thumbprint.nil? ? load_thumbprint : new_resource.Thumbprint
 
   # Configure winrm
   powershell_script 'enable winrm' do
