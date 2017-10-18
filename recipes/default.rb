@@ -49,17 +49,17 @@ end
 execute 'create-certificate' do
   command "#{Chef::Config[:file_cache_path]}\\selfssl.exe /T /N:cn=#{node['fqdn']} /V:3650 /Q"
   only_if { node['winrm']['https'] && node['winrm']['thumbprint'].nil? }
-  notifies :run, 'powershell[search-for-thumbprint]', :immediately
+  notifies :run, 'powershell_script[search-for-thumbprint]', :immediately
   notifies :create, 'ruby_block[read-winrm-thumbprint]', :immediately
   notifies :delete, 'file[cleanup-thumbprint]'
 end
 
-powershell 'winrm-quickconfig' do
+powershell_script 'winrm-quickconfig' do
   code 'winrm quickconfig -quiet'
   only_if { node['winrm']['http'] }
 end
 
-powershell 'winrm-create-https-listener' do
+powershell_script 'winrm-create-https-listener' do
   code "winrm create 'winrm/config/Listener?Address=*+Transport=HTTPS' '@{Hostname=\"#{node['fqdn']}\"; CertificateThumbprint=\"#{node['winrm']['thumbprint']}\"}'"
   only_if { node['winrm']['https'] && !File.zero?("#{Chef::Config[:file_cache_path]}\\winrm.thumbprint") }
 end
@@ -70,28 +70,28 @@ file 'cleanup-thumbprint' do
   backup false
 end
 
-powershell 'winrm-auth' do
+powershell_script 'winrm-auth' do
   code "winrm set winrm/config/service/Auth '@{Basic=\"#{node['winrm']['BasicAuth']}\"}'"
 end
 
-powershell 'winrm-unencrypted' do
+powershell_script 'winrm-unencrypted' do
   code "winrm set winrm/config/service '@{AllowUnencrypted=\"#{node['winrm']['AllowUnencrypted']}\"}'"
 end
 
-powershell 'winrm-winrs' do
+powershell_script 'winrm-winrs' do
   code "winrm set winrm/config/winrs '@{MaxMemoryPerShellMB=\"#{node['winrm']['MaxMemoryPerShellMB']}\"}'"
 end
 
-powershell 'winrm-winrs-trustedhosts' do
+powershell_script 'winrm-winrs-trustedhosts' do
   code "winrm set winrm/config/client '@{TrustedHosts=\"#{node['winrm']['TrustedHosts']}\"}'"
 end
 
-powershell 'winrm-http-listener' do
+powershell_script 'winrm-http-listener' do
   code "winrm set winrm/config/Listener?Address=*+Transport=HTTP '@{Hostname=\"#{node['fqdn']}\"}'"
   only_if { node['winrm']['http'] }
 end
 
-powershell 'winrm-https-listener' do
+powershell_script 'winrm-https-listener' do
   code "winrm set 'winrm/config/Listener?Address=*+Transport=HTTPS' '@{Hostname=\"#{node['fqdn']}\"; CertificateThumbprint=\"#{node['winrm']['thumbprint']}\"}'"
   only_if { node['winrm']['https'] && !node['winrm']['thumbprint'].nil? }
 end
