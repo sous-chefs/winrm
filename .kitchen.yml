@@ -1,15 +1,29 @@
 driver:
   name: vagrant
 
+transport:
+  name: winrm
+  elevated: true
+
 provisioner:
   name: chef_zero
+  always_update_cookbooks: true
+  require_chef_omnibus: 12.7
 
+verifier:
+  name: inspec
+  
 platforms:
   - name: windows-2012r2
     driver_config:
-      box: windows-2012r2
+      box: dhoer/windows-2012r2
+      vm_hostname: winrm-test
 
 suites:
   - name: default
     run_list:
       - recipe[winrm::default]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    attributes:
