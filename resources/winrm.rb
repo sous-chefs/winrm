@@ -153,7 +153,7 @@ action_class do
     cert_cmd = "powershell.exe -Command \" & {Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.Hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()}}\""
     cert_shell_out = Mixlib::ShellOut.new(cert_cmd)
     cert_shell_out.run_command
-    shell_out.stdout
+    shell_out.stdout.strip
   end
 
   def whyrun_supported?
