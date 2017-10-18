@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-powershell 'search-for-thumbprint' do
+powershell_script 'search-for-thumbprint' do
   cwd Chef::Config[:file_cache_path]
   code "Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{node['fqdn']} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()} | Out-File -Encoding \"ASCII\" winrm.thumbprint"
   only_if { node['winrm']['thumbprint'].nil? && node['winrm']['https'] }
