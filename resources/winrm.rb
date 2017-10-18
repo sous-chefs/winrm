@@ -53,8 +53,8 @@ action :create do
   Chef::Log.warn('load_thumbprint2')
   Chef::Log.warn(load_thumbprint)
 
-  thumbprint = 
-    if new_resource.Thumbprint.nil? 
+  thumbprint =
+    if new_resource.Thumbprint.nil?
       load_thumbprint
     else
       new_resource.Thumbprint
