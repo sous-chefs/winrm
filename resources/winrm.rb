@@ -32,7 +32,7 @@ property :GenerateCert, [true, false], default: true
 
 action :create do
   Chef::Log.warn('load_thumbprint1')
-  Chef::Log.warn(load_thumbprint)
+  Chef::Log.warn(load_thumbprint.to_s)
 
   # If no certificate found and generateCert is true try to generate a self signed cert
   if new_resource.HTTPS && thumbprint.nil? && load_thumbprint.nil?
@@ -51,7 +51,7 @@ action :create do
   Chef::Log.warn('new_resource.Thumbprint')
   Chef::Log.warn(new_resource.Thumbprint)
   Chef::Log.warn('load_thumbprint2')
-  Chef::Log.warn(load_thumbprint)
+  Chef::Log.warn(load_thumbprint.to_s)
 
   thumbprint = new_resource.Thumbprint.nil? ? load_thumbprint : new_resource.Thumbprint
 
