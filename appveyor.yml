@@ -3,10 +3,6 @@ environment:
   machine_pass: Pass@word1
   KITCHEN_YAML: .kitchen.appveyor.yml
 
-matrix:
-    - CHEF_VERSION: 12
-    - CHEF_VERSION: 13
-
 # Do not build on tags (GitHub only)
 skip_tags: true
 
