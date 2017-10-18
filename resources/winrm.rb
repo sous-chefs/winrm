@@ -53,7 +53,12 @@ action :create do
   Chef::Log.warn('load_thumbprint2')
   Chef::Log.warn(load_thumbprint)
 
-  thumbprint = new_resource.Thumbprint.nil? ? load_thumbprint : new_resource.Thumbprint
+  thumbprint = 
+    if new_resource.Thumbprint.nil? 
+      load_thumbprint
+    else
+      new_resource.Thumbprint
+    end
 
   # Configure winrm
   powershell_script 'enable winrm' do
