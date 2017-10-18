@@ -55,28 +55,6 @@ action :create do
 
   thumbprint = new_resource.Thumbprint.nil? ? load_thumbprint : new_resource.Thumbprint
 
-  # powershell_script 'search-for-thumbprint' do
-  # cwd Chef::Config[:file_cache_path]
-  # code "Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.Hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()} | Out-File -Encoding \"ASCII\" winrm.thumbprint"
-  # only_if { new_resource.Thumbprint.nil? && new_resource.HTTPS }
-  # end
-
-  # ruby_block 'read-winrm-thumbprint' do
-  # block do
-  # f = File.open("#{Chef::Config[:file_cache_path]}\\winrm.thumbprint", 'r')
-  # val = f.read.strip
-  # f.close
-  # node.default['winrm']['thumbprint'] = ((val.empty? || val.nil?) ? nil : val)
-  # end
-  # only_if { !File.zero?("#{Chef::Config[:file_cache_path]}\\winrm.thumbprint") && new_resource.Thumbprint.nil? && new_resource.HTTPS }
-  # end
-
-  # file 'cleanup-thumbprint' do
-  # path "#{Chef::Config[:file_cache_path]}\\winrm.thumbprint"
-  # action :delete
-  # backup false
-  # end
-
   # Configure winrm
   powershell_script 'enable winrm' do
     code <<-EOH
