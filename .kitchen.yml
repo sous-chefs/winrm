@@ -16,7 +16,7 @@ verifier:
 platforms:
   - name: windows-2012r2
     driver_config:
-      box: dhoer/windows-2012r2
+      box: windows-2012r2
       vm_hostname: winrm-test
 
 suites:
