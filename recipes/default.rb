@@ -36,7 +36,7 @@ ruby_block 'read-winrm-thumbprint' do
     f = File.open("#{Chef::Config[:file_cache_path]}\\winrm.thumbprint", 'r')
     val = f.read.strip
     f.close
-    node.set['winrm']['thumbprint'] = ((val.empty? || val.nil?) ? nil : val)
+    node.override['winrm']['thumbprint'] = ((val.empty? || val.nil?) ? nil : val)
   end
   only_if { !File.zero?("#{Chef::Config[:file_cache_path]}\\winrm.thumbprint") && node['winrm']['thumbprint'].nil? && node['winrm']['https'] }
 end
