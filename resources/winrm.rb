@@ -32,7 +32,7 @@ property :GenerateCert, [true, false], default: true
 
 action :create do
   Chef::Log.warn('load_thumbprint1')
-  Chef::Log.warn(load_thumbprint.to_s)
+  Chef::Log.warn(load_thumbprint[0])
 
   # If no certificate found and generateCert is true try to generate a self signed cert
   if new_resource.HTTPS && thumbprint.nil? && load_thumbprint.nil?
@@ -51,9 +51,9 @@ action :create do
   Chef::Log.warn('new_resource.Thumbprint')
   Chef::Log.warn(new_resource.Thumbprint)
   Chef::Log.warn('load_thumbprint2')
-  Chef::Log.warn(load_thumbprint.to_s)
+  Chef::Log.warn(load_thumbprint[0])
 
-  thumbprint = new_resource.Thumbprint.nil? ? load_thumbprint : new_resource.Thumbprint
+  thumbprint = new_resource.Thumbprint.nil? ? load_thumbprint[0] : new_resource.Thumbprint
 
   # Configure winrm
   powershell_script 'enable winrm' do
@@ -131,7 +131,7 @@ action_class do
     cert_cmd = "powershell.exe -Command \" & {Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.Hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()}}\""
     cert_shell_out = Mixlib::ShellOut.new(cert_cmd)
     cert_shell_out.run_command
-    shell_out.stdout.to_s.strip
+    shell_out.stdout
   end
 
   def whyrun_supported?
