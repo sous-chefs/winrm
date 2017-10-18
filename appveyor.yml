@@ -1,0 +1,34 @@
+os: Windows Server 2012 R2
+platform:
+  - x64
+environment:
+  winrm_user: test_user
+  winrm_pass: Pass@word1
+  winrm_port: 5985
+  KITCHEN_YAML: c:\GitHub\winrm\.kitchen.appveyor.yml
+  SSL_CERT_FILE: c:\GitHub\winrm\certs.pem
+  user_password: Pass@word1
+  UNIT_AND_LINT: 1
+
+  matrix:
+  - ruby_version: "23"
+
+clone_folder: c:\GitHub\winrm
+clone_depth: 1
+
+install:
+  - ps: net user /add $env:winrm_user $env:winrm_pass
+  - ps: net localgroup administrators $env:winrm_user /add
+  - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
+  - ps: Write-Host $env:PATH
+  - ps: gem install bundler --quiet --no-ri --no-rdoc
+  - ps: Invoke-WebRequest -Uri http://curl.haxx.se/ca/cacert.pem -OutFile c:\GitHub\winrm\certs.pem
+  - ps: ruby --version
+  - ps: gem --version
+  - ps: bundler --version
+
+#build_script:
+#  - bundle install
+
+test_script:
+  - chef exec delivery local all

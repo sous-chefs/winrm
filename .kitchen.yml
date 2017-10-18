@@ -1,13 +1,8 @@
 driver:
   name: vagrant
 
-transport:
-  name: winrm
-  elevated: true
-
 provisioner:
   name: chef_zero
-  always_update_cookbooks: true
   require_chef_omnibus: 12.7
 
 verifier:
@@ -23,7 +18,3 @@ suites:
   - name: default
     run_list:
       - recipe[winrm::default]
-    verifier:
-      inspec_tests:
-        - test/smoke/default
-    attributes:
