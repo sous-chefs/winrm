@@ -3,11 +3,13 @@ driver:
 
 provisioner:
   name: chef_zero
-
+  require_chef_omnibus: 12.7
+  
 platforms:
   - name: windows-2012r2
     driver_config:
-      box: windows-2012r2
+      box: dhoer/windows-2012r2
+      vm_hostname: winrm-test
 
 suites:
   - name: default
