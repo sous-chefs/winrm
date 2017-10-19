@@ -58,12 +58,11 @@ action :create do
   end
 
   # check if https listener already exists
-  winrm_cmd = 'powershell.exe winrm enumerate winrm/config/listener'
-  shell_out = Mixlib::ShellOut.new(winrm_cmd)
-  shell_out.run_command
+  winrm_cmd = 'winrm enumerate winrm/config/listener'
+  winrm_out = powershell_out(winrm_cmd)
 
   # Create HTTPS listener
-  if !shell_out.stdout.include?('Transport = HTTPS') && new_resource.HTTPS
+  if !winrm_out.stdout.include?('Transport = HTTPS') && new_resource.HTTPS
     if thumbprint.nil? || thumbprint.empty?
       Chef::Log.error('Please specify thumbprint or set GenerateCert to true for enabling https transport.')
     else
@@ -76,7 +75,7 @@ action :create do
   end
 
   # Create HTTP listener
-  if !shell_out.stdout.include?('Transport = HTTP') && new_resource.HTTP
+  if !winrm_out.stdout.include?('Transport = HTTP') && new_resource.HTTP
     powershell_script 'winrm-create-https-listener' do
       code "winrm set winrm/config/Listener?Address=*+Transport=HTTP '@{Hostname=\"#{new_resource.Hostname}\"}'"
     end
@@ -123,14 +122,11 @@ end
 
 action_class do
   def load_thumbprint
-    # cert_cmd = "powershell.exe -Command \" & {Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.Hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()}}\""
     cert_cmd = "Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.Hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()}"
-    # cert_shell_out = Mixlib::ShellOut.new(cert_cmd)
-    cert_shell_out = powershell_out!(cert_cmd)
-    # cert_shell_out.run_command
-    Chef::Log.warn(cert_shell_out.stdout)
-    Chef::Log.warn(cert_shell_out.stderr)
-    cert_shell_out.stdout
+    cert_out = powershell_out!(cert_cmd)
+    Chef::Log.error(cert_out.stdout.to_s)
+    Chef::Log.error(cert_out.stderr.to_s)
+    cert_out.stdout.to_s
   end
 
   def whyrun_supported?
