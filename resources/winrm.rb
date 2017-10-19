@@ -20,7 +20,6 @@ resource_name :winrm
 default_action :create
 
 property :Hostname, String, default: node['fqdn']
-property :EveryoneGroup, String, default: 'Everyone'
 property :TrustedHosts, String, default: '*'
 property :MaxMemoryPerShellMB, [String, Integer], default: 1024
 property :Thumbprint, [String, nil], default: nil

@@ -1,41 +1,30 @@
-WinRM Cookbook
-================
+# WinRM Cookbook
+
+[![Build Status](https://travis-ci.org/sous-chefs/winrm.svg?branch=master)](https://travis-ci.org/sous-chefs/winrm) [![Cookbook Version](https://img.shields.io/cookbook/v/winrm.svg)](https://supermarket.chef.io/cookbooks/winrm)
+
 Installs and configures WinRM on a Windows System 
 
-[![Build Status](https://travis-ci.org/Webtrends/winrm.svg?branch=master)](https://travis-ci.org/Webtrends/winrm) [![Code Climate](https://codeclimate.com/github/Webtrends/winrm.svg)](https://codeclimate.com/github/Webtrends/winrm) [![Cookbook Version](https://img.shields.io/cookbook/v/winrm.svg)](https://supermarket.chef.io/cookbooks/winrm)
+## Requirements
 
-Requirements
-------------
-### Platform
-* Windows 7 Enterprise
-* Windows 2008
-* Windows 2008 R2
+### Platforms
 
-**Notes**: This cookbook has been tested on the listed platforms. It may work on other platforms with or without modification.
+- Windows 2008 R2
+- Windows 2012 R2
+
+If you would like support for your preferred platform. Please think about creating a Vagrant Box and adding test platforms
 
 ### Chef
-* Chef 11+
 
-### Cookbooks
-* Windows
-* Powershell
+- Chef 12.7+
 
+## Known Limitations
 
-Attributes
-----------
+- Does not install powershell, must be already installed.
+
+## Recipes
+
 ### default
-* `node['winrm']['thumbprint']` - The SSL thumbprint WinRM uses for incomming connections, will be generated if not found (only used when SSL is enabled)
-* `node['winrm']['https']` - Enable SSL for WinRM, default 'true'
-* `node['winrm']['http']` - Enable HTTP for WinRM, defautl 'true'
-* `node['winrm']['BasicAuth']` - Support basic authentication, default 'true'
-* `node['winrm']['MaxMemoryPerShellMB']` - Max memory per WinRM shell allowed in MB, default '1024'
-* `node['winrm']['AllowUnencrypted']` - Allow unencrypted data transfers, default 'true'
-* `node['winrm']['TrustedHosts']` - Hosts that are allowed to connect via WinRM, default '*'
 
-
-Recipes
--------
-### default
 Installs and configures WinRM on the windows system.  Ensures firewall rules allow traffic to WinRM. 
 
 The recipe does the following:
@@ -43,17 +32,40 @@ The recipe does the following:
 1. Search for thumbprint for the FQDN of the node, if found use it.  Otherwise create a new self signed SSL certificate if SSL is enabled.
 2. Install WinRM via quick configure
 3. Configure listeners, HTTP and/or HTTPS 
-4. Create SSH keys from data bag
-5. Create firewall rules if needed
+4. Configure additional options
+5. Create firewall rules
 
+## Resources
 
-License & Authors
------------------
-- Author:: Peter Crossley <peter.crossley@webtrends.com>
+### Server
 
-```text
+```ruby
+winrm 'default' do
+  Hostname # Used for creating the listeners and finding the certificate thumbprint or creating a new one, default node['fqdn']
+  TrustedHosts # Trusted hosts to allow connections from, default '*'
+  MaxMemoryPerShellMB # Max memory allowed for each remote shell, default 1024
+  Thumbprint # Specify a certificate thumbprint to use, if `nil` will looks for certificate matching hostname, default nil
+  HTTP # Enable HTTP listener, default true
+  HTTPS # Enable HTTPS listener, default true
+  AllowUnencrypted # Wether to allow unencrypted WinRM connections, default true
+  BasicAuth # Enable Basic Authentication, default true
+  GenerateCert # Wether to generate a cert if none is found, default true
+end
+```
+
+## Usage
+
+The `winrm::default` recipe includes the winrm resource using defaults
+
+Create a cookbook with the `winrm` resource as if you were using any other Chef resource.
+
+For examples see the `test/fixtures/cookbooks/test` directory.
+
+## License
+
 Copyright 2014-2015, Webtrends Inc.
 
+```text
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -66,3 +78,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+[user resource]: https://docs.chef.io/resource_user.html
