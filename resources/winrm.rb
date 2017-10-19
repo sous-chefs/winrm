@@ -45,8 +45,6 @@ action :create do
     end
   end
 
-  Chef::Log.warn('new_resource.Thumbprint')
-  Chef::Log.warn(new_resource.Thumbprint)
   Chef::Log.warn('load_thumbprint2')
   Chef::Log.warn(load_thumbprint)
 
@@ -125,9 +123,13 @@ end
 
 action_class do
   def load_thumbprint
-    cert_cmd = "powershell.exe -Command \" & {Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.Hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()}}\""
-    cert_shell_out = Mixlib::ShellOut.new(cert_cmd)
-    cert_shell_out.run_command
+    # cert_cmd = "powershell.exe -Command \" & {Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.Hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()}}\""
+    cert_cmd = "Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.Hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()}"
+    # cert_shell_out = Mixlib::ShellOut.new(cert_cmd)
+    cert_shell_out = powershell_out!(cert_cmd)
+    # cert_shell_out.run_command
+    Chef::Log.warn(cert_shell_out.stdout)
+    Chef::Log.warn(cert_shell_out.stderr)
     cert_shell_out.stdout
   end
 
