@@ -31,11 +31,9 @@ property :BasicAuth, [true, false], default: true
 property :GenerateCert, [true, false], default: true
 
 action :create do
-  Chef::Log.warn('load_thumbprint1')
-  Chef::Log.warn(load_thumbprint)
-
   # If no certificate found and generateCert is true try to generate a self signed cert
-  if new_resource.HTTPS && new_resource.Thumbprint.nil? && load_thumbprint.nil?
+  if new_resource.HTTPS && new_resource.Thumbprint.nil? && load_thumbprint.empty?
+    Chef::Log.warn('Inside Create Cert')
     cookbook_file "#{Chef::Config[:file_cache_path]}\\selfssl.exe" do
       source 'selfssl.exe'
     end
@@ -44,9 +42,6 @@ action :create do
       command "#{Chef::Config[:file_cache_path]}\\selfssl.exe /T /N:cn=#{new_resource.Hostname} /V:3650 /Q"
     end
   end
-
-  Chef::Log.warn('load_thumbprint2')
-  Chef::Log.warn(load_thumbprint)
 
   thumbprint = new_resource.Thumbprint.nil? ? load_thumbprint : new_resource.Thumbprint
 
@@ -59,7 +54,7 @@ action :create do
 
   # check if https listener already exists
   winrm_cmd = 'winrm enumerate winrm/config/listener'
-  winrm_out = powershell_out(winrm_cmd)
+  winrm_out = powershell_out!(winrm_cmd)
 
   # Create HTTPS listener
   if !winrm_out.stdout.include?('Transport = HTTPS') && new_resource.HTTPS
@@ -124,9 +119,7 @@ action_class do
   def load_thumbprint
     cert_cmd = "Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.Hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()}"
     cert_out = powershell_out!(cert_cmd)
-    Chef::Log.error(cert_out.stdout.to_s)
-    Chef::Log.error(cert_out.stderr.to_s)
-    cert_out.stdout.to_s
+    cert_out.stdout.strip
   end
 
   def whyrun_supported?
