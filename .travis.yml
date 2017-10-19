@@ -1,0 +1,31 @@
+sudo: required
+dist: trusty
+
+addons:
+  apt:
+    sources:
+      - chef-current-trusty
+    packages:
+      - chefdk
+
+install: echo "skip bundle install"
+
+branches:
+  only:
+    - master
+
+services: docker
+
+env:
+  matrix:
+  - INSTANCE=server-ubuntu-1604
+
+before_script:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
+
+script:
+  - /opt/chefdk/embedded/bin/chef exec delivery local all
