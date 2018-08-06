@@ -1,6 +1,6 @@
 name             'winrm'
-maintainer       'Webtrends, Inc.'
-maintainer_email 'Peter Crossley <peter.crossley@webtrends.com>'
+maintainer       'Sous Chefs'
+maintainer_email 'help@sous-chefs.org'
 license          'Apache-2.0'
 description      'Installs and configures WinRM'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))

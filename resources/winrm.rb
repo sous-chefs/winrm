@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 resource_name :winrm
-default_action :create
 
 property :Hostname, String, default: node['fqdn']
 property :TrustedHosts, String, default: '*'
