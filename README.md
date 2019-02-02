@@ -1,8 +1,8 @@
 # WinRM Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/winrm.svg?branch=master)](https://travis-ci.org/sous-chefs/winrm) [![Cookbook Version](https://img.shields.io/cookbook/v/winrm.svg)](https://supermarket.chef.io/cookbooks/winrm)
+[![Cookbook Version](https://img.shields.io/cookbook/v/winrm.svg)](https://supermarket.chef.io/cookbooks/winrm)
 
-Installs and configures WinRM on a Windows System 
+Installs and configures WinRM on a Windows System
 
 ## Requirements
 
@@ -15,55 +15,61 @@ If you would like support for your preferred platform. Please think about creati
 
 ### Chef
 
-- Chef 12.7+
+- Chef 13.0+
 
 ## Known Limitations
 
-- Does not install powershell, must be already installed.
+- Does not install PowerShell, must be already installed.
 
 ## Recipes
 
 ### default
 
-Installs and configures WinRM on the windows system.  Ensures firewall rules allow traffic to WinRM. 
+Installs and configures WinRM on the windows system.  Ensures firewall rules allow traffic to WinRM.
 
 The recipe does the following:
 
 1. Search for thumbprint for the FQDN of the node, if found use it.  Otherwise create a new self signed SSL certificate if SSL is enabled.
 2. Install WinRM via quick configure
-3. Configure listeners, HTTP and/or HTTPS 
+3. Configure listeners, HTTP and/or HTTPS
 4. Configure additional options
 5. Create firewall rules
 
 ## Resources
 
-### Server
+### winrm_listener_config
+
+Configure winrm listeners on a host. Previously this resource was named `winrm` and that legacy name will continue to function.
+
+#### Actions
+
+- `:create` - configure a listener
+
+#### Properties
+
+- `hostname` - Used for creating the listeners and finding the certificate thumbprint or creating a new one, default node['fqdn']
+- `trusted_hosts` - Trusted hosts to allow connections from, default '*'
+- `max_shell_memory` - Max memory allowed for each remote shell, default 1024
+- `thumbprint` - Specify a certificate thumbprint to use, if `nil` will looks for certificate matching hostname, default nil
+- `listen_http` - Enable HTTP listener, default true
+- `listen_https` - Enable HTTPS listener, default true
+- `allow_unencrypted` - Wether to allow unencrypted WinRM connections, default true
+- `allow_basic_auth` - Enable Basic Authentication, default true
+- `generate_cert` - Whether to generate a cert if none is found, default true
+
+#### Examples
 
 ```ruby
-winrm 'default' do
-  Hostname # Used for creating the listeners and finding the certificate thumbprint or creating a new one, default node['fqdn']
-  TrustedHosts # Trusted hosts to allow connections from, default '*'
-  MaxMemoryPerShellMB # Max memory allowed for each remote shell, default 1024
-  Thumbprint # Specify a certificate thumbprint to use, if `nil` will looks for certificate matching hostname, default nil
-  HTTP # Enable HTTP listener, default true
-  HTTPS # Enable HTTPS listener, default true
-  AllowUnencrypted # Wether to allow unencrypted WinRM connections, default true
-  BasicAuth # Enable Basic Authentication, default true
-  GenerateCert # Wether to generate a cert if none is found, default true
+winrm_listener_config 'default' do
+  listen_http false
+  allow_unencrypted false
 end
 ```
-
-## Usage
-
-The `winrm::default` recipe includes the winrm resource using defaults
-
-Create a cookbook with the `winrm` resource as if you were using any other Chef resource.
-
-For examples see the `test/fixtures/cookbooks/test` directory.
 
 ## License
 
 Copyright 2014-2015, Webtrends Inc.
+Copyright 2019, Chef Software, Inc.
 
 ```text
 Licensed under the Apache License, Version 2.0 (the "License");

@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 if platform_family?('windows')
-  winrm 'default'
+  winrm_listener_config 'default'
 else
   Chef::Log.warn('WinRM can only be enabled on the Windows platform.')
 end
