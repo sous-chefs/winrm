@@ -1,6 +1,6 @@
 # WinRM Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/winrm.svg?branch=master)](https://travis-ci.org/sous-chefs/winrm) [![Cookbook Version](https://img.shields.io/cookbook/v/winrm.svg)](https://supermarket.chef.io/cookbooks/winrm)
+[![Cookbook Version](https://img.shields.io/cookbook/v/winrm.svg)](https://supermarket.chef.io/cookbooks/winrm)
 
 Installs and configures WinRM on a Windows System 
 
