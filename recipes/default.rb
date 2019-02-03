@@ -16,7 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 if platform_family?('windows')
+  Chef::Log.warn('winrm::default recipe has been deprecated. Please use the winrm_listener_config resource directory instead.')
+
   winrm_listener_config 'default'
 else
   Chef::Log.warn('WinRM can only be enabled on the Windows platform.')

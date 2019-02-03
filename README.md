@@ -17,23 +17,9 @@ If you would like support for your preferred platform. Please think about creati
 
 - Chef 13.0+
 
-## Known Limitations
+## Additional Requirements
 
-- Does not install PowerShell, must be already installed.
-
-## Recipes
-
-### default
-
-Installs and configures WinRM on the windows system.  Ensures firewall rules allow traffic to WinRM.
-
-The recipe does the following:
-
-1. Search for thumbprint for the FQDN of the node, if found use it.  Otherwise create a new self signed SSL certificate if SSL is enabled.
-2. Install WinRM via quick configure
-3. Configure listeners, HTTP and/or HTTPS
-4. Configure additional options
-5. Create firewall rules
+- PowerShell must already be installed
 
 ## Resources
 
@@ -56,6 +42,7 @@ Configure winrm listeners on a host. Previously this resource was named `winrm` 
 - `allow_unencrypted` - Wether to allow unencrypted WinRM connections, default true
 - `allow_basic_auth` - Enable Basic Authentication, default true
 - `generate_cert` - Whether to generate a cert if none is found, default true
+- `add_firewall_rule` - Whether to create a firewall rule which allows WinRM access, default true
 
 #### Examples
 
