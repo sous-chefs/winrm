@@ -33,6 +33,7 @@ property :listen_https, [true, false], default: true
 property :allow_unencrypted, [true, false], default: true
 property :allow_basic_auth, [true, false], default: true
 property :generate_cert, [true, false], default: true
+property :add_firewall_rule, [true, false], default: true
 
 # support the legacy names that were just the PowerShell names
 alias :Hostname :hostname
@@ -61,10 +62,8 @@ action :create do
   thumbprint = new_resource.thumbprint.nil? ? load_thumbprint : new_resource.thumbprint
 
   # Configure winrm
-  powershell_script 'enable winrm' do
-    code <<-EOH
-      winrm quickconfig -q
-    EOH
+  execute 'Enable WinRM' do
+    command 'winrm quickconfig -q'
   end
 
   # check if https listener already exists
@@ -110,23 +109,20 @@ action :create do
     code "winrm set winrm/config/client '@{TrustedHosts=\"#{new_resource.trusted_hosts}\"}'"
   end
 
-  # Allow port in firewall
-  firewall_rule_name = 'WINRM HTTP Static Port'
+  # Allow ports in firewall if configured
+  if new_resource.add_firewall_rule
+    windows_firewall_rule 'WINRM HTTP Static Port' do
+      local_port '5985'
+      protocol 'TCP'
+      firewall_action :allow
+    end
 
-  execute 'open-static-port-http' do
-    command "netsh advfirewall firewall add rule name=\"#{firewall_rule_name}\" dir=in action=allow protocol=TCP localport=5985"
-    returns [0, 1, 42] # *sigh* cmd.exe return codes are wonky
-    not_if { Winrm::Helper.firewall_rule_enabled?(firewall_rule_name) }
-    only_if { new_resource.listen_http }
-  end
-
-  firewall_rule_name = 'WINRM HTTPS Static Port'
-
-  execute 'open-static-port-https' do
-    command "netsh advfirewall firewall add rule name=\"#{firewall_rule_name}\" dir=in action=allow protocol=TCP localport=5986"
-    returns [0, 1, 42] # *sigh* cmd.exe return codes are wonky
-    not_if { Winrm::Helper.firewall_rule_enabled?(firewall_rule_name) }
-    only_if { new_resource.listen_https && !thumbprint.nil? }
+    windows_firewall_rule 'WINRM HTTPS Static Port' do
+      local_port '5986'
+      protocol 'TCP'
+      firewall_action :allow
+      only_if { new_resource.listen_http }
+    end
   end
 end
 
