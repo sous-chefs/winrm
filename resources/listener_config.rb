@@ -109,24 +109,19 @@ action :create do
     code "winrm set winrm/config/client '@{TrustedHosts=\"#{new_resource.trusted_hosts}\"}'"
   end
 
+  # Allow ports in firewall if configured
   if new_resource.add_firewall_rule
-    # Allow port in firewall
-    firewall_rule_name = 'WINRM HTTP Static Port'
-
-    execute 'open-static-port-http' do
-      command "netsh advfirewall firewall add rule name=\"#{firewall_rule_name}\" dir=in action=allow protocol=TCP localport=5985"
-      returns [0, 1, 42] # *sigh* cmd.exe return codes are wonky
-      not_if { Winrm::Helper.firewall_rule_enabled?(firewall_rule_name) }
-      only_if { new_resource.listen_http }
+    windows_firewall_rule 'WINRM HTTP Static Port' do
+      local_port '5985'
+      protocol 'TCP'
+      firewall_action :allow
     end
 
-    firewall_rule_name = 'WINRM HTTPS Static Port'
-
-    execute 'open-static-port-https' do
-      command "netsh advfirewall firewall add rule name=\"#{firewall_rule_name}\" dir=in action=allow protocol=TCP localport=5986"
-      returns [0, 1, 42] # *sigh* cmd.exe return codes are wonky
-      not_if { Winrm::Helper.firewall_rule_enabled?(firewall_rule_name) }
-      only_if { new_resource.listen_https && !thumbprint.nil? }
+    windows_firewall_rule 'WINRM HTTPS Static Port' do
+      local_port '5986'
+      protocol 'TCP'
+      firewall_action :allow
+      only_if { new_resource.listen_http }
     end
   end
 end
