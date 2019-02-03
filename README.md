@@ -9,9 +9,8 @@ Installs and configures WinRM on a Windows System
 ### Platforms
 
 - Windows 2008 R2
-- Windows 2012 R2
-
-If you would like support for your preferred platform. Please think about creating a Vagrant Box and adding test platforms
+- Windows 2012 / 2012 R2
+- Windows 2016
 
 ### Chef
 
