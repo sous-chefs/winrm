@@ -62,10 +62,8 @@ action :create do
   thumbprint = new_resource.thumbprint.nil? ? load_thumbprint : new_resource.thumbprint
 
   # Configure winrm
-  powershell_script 'enable winrm' do
-    code <<-EOH
-      winrm quickconfig -q
-    EOH
+  execute 'Enable WinRM' do
+    command 'winrm quickconfig -q'
   end
 
   # check if https listener already exists
