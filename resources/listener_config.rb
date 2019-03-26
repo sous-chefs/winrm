@@ -48,7 +48,7 @@ alias :GenerateCert :generate_cert
 
 action :create do
   # If no certificate found and generateCert is true try to generate a self signed cert
-  if new_resource.listen_http && new_resource.thumbprint.nil? && load_thumbprint.empty?
+  if new_resource.generate_cert && new_resource.listen_https && new_resource.thumbprint.nil? && load_thumbprint.empty?
     Chef::Log.warn('Inside Create Cert')
     cookbook_file "#{Chef::Config[:file_cache_path]}\\selfssl.exe" do
       source 'selfssl.exe'
