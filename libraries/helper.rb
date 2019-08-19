@@ -1,6 +1,6 @@
 #
 # Author:: Seth Chisamore (<schisamo@opscode.com>)
-# Cookbook Name:: winrm
+# Cookbook:: winrm
 # Library:: helper
 #
 # Copyright:: Copyright (c) 2011 Opscode, Inc.
