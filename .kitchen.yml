@@ -1,13 +1,25 @@
 driver:
   name: vagrant
+  customize:
+    memory: 4096
+    cpus: 2
 
 provisioner:
   name: chef_zero
-  
+
 platforms:
   - name: windows-2012r2
     driver_config:
-      box: dhoer/windows-2012r2
+      memory: 2048
+      box: tas50/windows_2012r2
+      vm_hostname: winrm-test
+  - name: windows-2016
+    driver_config:
+      box: tas50/windows_2016
+      vm_hostname: winrm-test
+  - name: windows-2019
+    driver_config:
+      box: tas50/windows_2019
       vm_hostname: winrm-test
 
 suites:
