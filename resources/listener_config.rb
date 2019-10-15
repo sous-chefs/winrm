@@ -1,5 +1,4 @@
 #
-# Cookbook Name:: winrm
 # Resource:: winrm_listener_config
 #
 # Author:: Peter Crossley
