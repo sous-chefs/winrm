@@ -1,7 +1,9 @@
+---
 environment:
   machine_user: test_user
   machine_pass: Pass@word1
-  KITCHEN_YAML: .kitchen.appveyor.yml
+  KITCHEN_YAML: kitchen.appveyor.yml
+  CHEF_LICENSE: accept
 
 # Do not build on tags (GitHub only)
 skip_tags: true
@@ -11,8 +13,8 @@ clone_depth: 1
 
 # Install the latest nightly of ChefDK
 install:
-  - ps: iex (irm https://omnitruck.chef.io/install.ps1); Install-Project -Project chefdk -channel stable
-  - ps: 'Get-CimInstance win32_operatingsystem -Property Caption, OSArchitecture, Version | fl Caption, OSArchitecture, Version'
+  - ps: (& cmd /c); iex (irm https://omnitruck.chef.io/install.ps1); Install-Project -Project chefdk -channel current
+  - ps: Get-CimInstance win32_operatingsystem -Property Caption, OSArchitecture, Version | fl Caption, OSArchitecture, Version
   - ps: $PSVersionTable
   - c:\opscode\chefdk\bin\chef.bat exec ruby --version
   - ps: secedit /export /cfg $env:temp/export.cfg

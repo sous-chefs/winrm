@@ -27,8 +27,7 @@
 - Added modern Ruby releases to Travis and add rubocop and chefspec testing
 - Added retina badges to the readme and added the cookbook version badge
 
-
-## 1.0.0 (02-14-2014):
+## 1.0.0 (02-14-2014)
 
 - Initial release of the WinRM cookbook
 - Adding support for Travis-CI and foodcritic

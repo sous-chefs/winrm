@@ -1,3 +1,4 @@
+---
 driver:
   name: proxy
   host: localhost
@@ -6,12 +7,21 @@ driver:
   username: <%= ENV["machine_user"] %>
   password: <%= ENV["machine_pass"] %>
 
+transport:
+  name: winrm
+  elevated: true
+
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 13.0
+  deprecation_as_errors: true
+  product_name: chef
+  product_version: 15
+  chef_license: accept
 
 platforms:
   - name: windows-2012R2
+  - name: windows-2016
+  - name: windows-2019
 
 suites:
   - name: default
