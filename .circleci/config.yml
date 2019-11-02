@@ -1,18 +1,23 @@
 ---
+jobs:
+  final:
+    docker:
+      - image: bash:latest
+    steps:
+      - run:
+          name: Finish cooking
+          command: echo "Finished cooking"
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
   - lint-yaml
   - lint-markdown
-
 version: 2.1
 orbs:
   kitchen: sous-chefs/kitchen@2
-
 workflows:
   kitchen:
     jobs:
-      # Lint and Unit Test
       - kitchen/yamllint:
           name: lint-yaml
       - kitchen/mdlint:
@@ -22,3 +27,20 @@ workflows:
           context: Danger
       - kitchen/delivery:
           name: delivery
+      - kitchen/dokken-single:
+          name: default-windows-2012r2
+          suite: default-windows-2012r2
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-windows-2016
+          suite: default-windows-2016
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-windows-2019
+          suite: default-windows-2019
+          requires: *lint_and_unit
+      - final:
+          requires:
+            - default-windows-2012r2
+            - default-windows-2016
+            - default-windows-2019
