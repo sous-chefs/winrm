@@ -27,20 +27,5 @@ workflows:
           context: Danger
       - kitchen/delivery:
           name: delivery
-      - kitchen/dokken-single:
-          name: default-windows-2012r2
-          suite: default-windows-2012r2
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: default-windows-2016
-          suite: default-windows-2016
-          requires: *lint_and_unit
-      - kitchen/dokken-single:
-          name: default-windows-2019
-          suite: default-windows-2019
-          requires: *lint_and_unit
       - final:
-          requires:
-            - default-windows-2012r2
-            - default-windows-2016
-            - default-windows-2019
+          requires: *lint_and_unit
