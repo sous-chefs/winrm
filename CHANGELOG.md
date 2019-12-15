@@ -1,5 +1,9 @@
 # Winrm Changelog
 
+## UNRELEASED
+
+- Use TrueClass and FalseClass in resources
+
 ## 3.0.0 (2019-02-02)
 
 - This cookbook now requires Chef 13 or later as Chef 12 has been end of life for nearly a year

@@ -27,12 +27,12 @@ property :hostname, String, default: lazy { node['fqdn'] }
 property :trusted_hosts, String, default: '*'
 property :max_shell_memory, [String, Integer], default: 1024
 property :thumbprint, String
-property :listen_http, [true, false], default: true
-property :listen_https, [true, false], default: true
-property :allow_unencrypted, [true, false], default: true
-property :allow_basic_auth, [true, false], default: true
-property :generate_cert, [true, false], default: true
-property :add_firewall_rule, [true, false], default: true
+property :listen_http, [TrueClass, FalseClass], default: true
+property :listen_https, [TrueClass, FalseClass], default: true
+property :allow_unencrypted, [TrueClass, FalseClass], default: true
+property :allow_basic_auth, [TrueClass, FalseClass], default: true
+property :generate_cert, [TrueClass, FalseClass], default: true
+property :add_firewall_rule, [TrueClass, FalseClass], default: true
 
 # support the legacy names that were just the PowerShell names
 alias :Hostname :hostname
