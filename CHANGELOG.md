@@ -1,5 +1,10 @@
 # Winrm Changelog
 
+## UNRELEASED
+
+- refer to the correct certificate store for machine certs
+- return the certificate thumbprint as an object attribute, not a substring search
+
 ## 3.0.0 (2019-02-02)
 
 - This cookbook now requires Chef 13 or later as Chef 12 has been end of life for nearly a year
