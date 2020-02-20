@@ -1,9 +1,10 @@
-# Winrm Changelog
+# Changelog
 
-## UNRELEASED
+## Unreleased
 
 - refer to the correct certificate store for machine certs
 - return the certificate thumbprint as an object attribute, not a substring search
+- Migrate to actions
 
 ## 3.0.0 (2019-02-02)
 
@@ -13,7 +14,7 @@
 
 ## 2.0.0 (2017-10-19)
 
-- * BREAKING CHANGE, attributes no longer exist
+- BREAKING CHANGE, attributes no longer exist
 - Convert to custom resource
 - Update to work with newer chef versions
 
