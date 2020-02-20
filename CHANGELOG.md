@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.0.1
 
 - refer to the correct certificate store for machine certs
 - return the certificate thumbprint as an object attribute, not a substring search
