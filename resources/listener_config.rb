@@ -127,7 +127,7 @@ end
 
 action_class do
   def load_thumbprint
-    cert_cmd = "Get-childItem cert:\\LocalMachine\\Root\\ | Select-String -pattern #{new_resource.hostname} | Select-Object -first 1 -ExpandProperty line | % { $_.SubString($_.IndexOf('[Thumbprint]')+ '[Thumbprint]'.Length).Trim()}"
+    cert_cmd = "Get-ChildItem Cert:\\LocalMachine\\My\\ -Recurse | where-Object {$_.Subject -match \"#{new_resource.hostname}\" } | Select-Object -First 1 | % { $_.Thumbprint }"
     cert_out = powershell_out!(cert_cmd)
     cert_out.stdout.strip
   end

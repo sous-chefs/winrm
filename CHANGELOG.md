@@ -1,7 +1,9 @@
-# Winrm Changelog
+# Changelog
 
 ## Unreleased
 
+- refer to the correct certificate store for machine certs
+- return the certificate thumbprint as an object attribute, not a substring search
 - Migrate to actions
 
 ## 3.0.0 (2019-02-02)
