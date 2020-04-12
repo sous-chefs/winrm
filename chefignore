@@ -40,6 +40,7 @@ a.out
 *.com
 *.class
 *.dll
+*.exe
 */rdoc/
 
 # Testing #
@@ -73,7 +74,6 @@ Rakefile
 */.bzr/*
 */.hg/*
 */.svn/*
-.github
 
 # Berkshelf #
 #############
@@ -81,6 +81,11 @@ Berksfile
 Berksfile.lock
 cookbooks/*
 tmp
+
+# Policyfile #
+##############
+Policyfile.rb
+Policyfile.lock.json
 
 # Cookbooks #
 #############
