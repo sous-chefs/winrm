@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- resolved cookstyle error: test/smoke/default/default_test.rb:1:1 convention: `Style/Encoding`
+
 ## 3.0.1
 
 - refer to the correct certificate store for machine certs
