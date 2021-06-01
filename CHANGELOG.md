@@ -1,5 +1,7 @@
 # Changelog
 
+## Unreleased
+
 ## 3.0.2 - *2021-06-01*
 
 - resolved cookstyle error: test/smoke/default/default_test.rb:1:1 convention: `Style/Encoding`
