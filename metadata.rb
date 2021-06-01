@@ -8,6 +8,6 @@ source_url       'https://github.com/sous-chefs/winrm'
 issues_url       'https://github.com/sous-chefs/winrm/issues'
 chef_version     '>= 13.0'
 
-version          '3.0.1'
+version          '3.0.2'
 
 depends          'windows_firewall', '>= 5.0' # >= chef 14.7
