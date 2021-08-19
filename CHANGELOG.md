@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- resolved cookstyle error: metadata.rb:13:1 refactor: `Chef/Modernize/DependsOnWindowsFirewallCookbook`
 - resolved cookstyle error: resources/listener_config.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
 - resolved cookstyle error: test/smoke/default/default_test.rb:1:1 convention: `Style/Encoding`
 
