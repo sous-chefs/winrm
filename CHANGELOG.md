@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Standardise files with files in sous-chefs/repo-management
+
 ## 3.0.2 - *2021-06-01*
 
 - resolved cookstyle error: test/smoke/default/default_test.rb:1:1 convention: `Style/Encoding`
