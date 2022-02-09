@@ -45,6 +45,8 @@ alias :AllowUnencrypted :allow_unencrypted
 alias :BasicAuth :allow_basic_auth
 alias :GenerateCert :generate_cert
 
+unified_mode true
+
 action :create do
   # If no certificate found and generateCert is true try to generate a self signed cert
   if new_resource.generate_cert && new_resource.listen_https && new_resource.thumbprint.nil? && load_thumbprint.empty?
