@@ -16,13 +16,13 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 ### Platforms
 
-- Windows 2008 R2
-- Windows 2012 / 2012 R2
 - Windows 2016
+- Windows 2019
+- Windows 2022
 
 ### Chef
 
-- Chef 13.0+
+- Chef 15.4+
 
 ## Additional Requirements
 

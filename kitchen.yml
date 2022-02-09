@@ -1,6 +1,7 @@
 ---
 driver:
   name: vagrant
+  provider: parallels
   customize:
     memory: 4096
     cpus: 2
@@ -9,11 +10,6 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: windows-2012r2
-    driver_config:
-      memory: 2048
-      box: tas50/windows_2012r2
-      vm_hostname: winrm-test
   - name: windows-2016
     driver_config:
       box: tas50/windows_2016
