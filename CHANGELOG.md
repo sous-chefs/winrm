@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+- Update ci.yml to use sous-chef reusable workflow
+- Add unified_mode flag
+- Remove EOL'd OS versions
+- Remove deprecated windows_firewall cookbook dependency
+- Update minimum Chef version to 15.4
+- Add minimal unit tests
+- Update soec test to use a supported OS version
+- Update kitchen.yml and kitchen.appveyor.yml to remove EOL'd OS versions
+- Add kitchen-azure.yml with all currently supported OS versions.
+- Update README with minimum Chf versions and supported windows versions
+
 ## 3.0.3 - *2021-08-31*
 
 - Standardise files with files in sous-chefs/repo-management
