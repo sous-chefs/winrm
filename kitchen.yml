@@ -1,7 +1,6 @@
 ---
 driver:
   name: vagrant
-  provider: parallels
   customize:
     memory: 4096
     cpus: 2
