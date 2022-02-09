@@ -1,0 +1,83 @@
+---
+driver:
+  name: azurerm
+  subscription_id: <%= ENV['AZURE_SUBSCRIPTION_ID'] %>
+  machine_size: Standard_A2m_v2
+  location: Central US
+  azure_resource_group_prefix: kitchen-
+
+provisioner:
+  name: chef_zero
+  product_name: chef
+  product_version: 17
+  retry_on_exit_code:
+    - 35 # 35 is the exit code signaling that the node is rebooting
+    - 213
+  wait_for_retry: 30
+  max_retries: 4
+
+
+platforms:
+  - name: windows-2016-std # EOL Date: 11 Jan 2022, can purchase extended support through 11 Jan 2027
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2016-Datacenter-smalldisk:latest
+      resource_group_tags:
+        project: 'Test-Kitchen'
+        contact: <%= ENV['USER'] %>
+      vm_tags:
+        project: Test Kitchen
+        cookbook: winrm
+    transport:
+      name: winrm
+      elvated: true
+
+  - name: windows-2019-core
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2019-Datacenter-core-smalldisk:latest
+      resource_group_tags:
+        project: 'Test-Kitchen'
+        contact: <%= ENV['USER'] %>
+      vm_tags:
+        project: Test Kitchen
+        cookbook: winrm
+    transport:
+      name: winrm
+      elvated: true
+
+  - name: windows-2019-std
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2019-Datacenter-smalldisk:latest
+      resource_group_tags:
+        project: 'Test-Kitchen'
+        contact: <%= ENV['USER'] %>
+      vm_tags:
+        project: Test Kitchen
+        cookbook: winrm
+    transport:
+      name: winrm
+      elvated: true
+
+  - name: windows-2022-std
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2022-Datacenter-smalldisk:latest
+      resource_group_tags:
+        project: 'Test-Kitchen'
+        contact: <%= ENV['USER'] %>
+      vm_tags:
+        project: Test Kitchen
+        cookbook: winrm
+    transport:
+      name: winrm
+      elvated: true
+
+suites:
+  - name: default
+    run_list:
+      - recipe[winrm::default]
+    verifier:
+      name: inspec
+      inspec_tests:
+        - test/smoke/default
+    attributes:
+      audit:
+        compliance_phase: false
