@@ -19,6 +19,7 @@ provisioner:
   chef_license: accept
 
 platforms:
+  - name: windows-2012R2
   - name: windows-2016
   - name: windows-2019
   - name: windows-2022

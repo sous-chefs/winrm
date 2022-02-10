@@ -9,7 +9,7 @@ require 'spec_helper'
 describe 'winrm::default' do
   context 'Windows' do
     let(:chef_run) do
-      runner = ChefSpec::ServerRunner.new(file_cache_path: Chef::Config[:file_cache_path], platform: 'windows', version: '2019')
+      runner = ChefSpec::ServerRunner.new(file_cache_path: Chef::Config[:file_cache_path], platform: 'windows')
       runner.converge(described_recipe)
     end
 

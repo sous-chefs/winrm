@@ -18,6 +18,32 @@ provisioner:
 
 
 platforms:
+  - name: windows-2012-std # EOL Date: 09 Oct. 2018, can purchese extended Support through 10 Oct 2023
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2012-Datacenter:latest
+      resource_group_tags:
+        project: 'Test-Kitchen'
+        contact: <%= ENV['USER'] %>
+      vm_tags:
+        project: Test Kitchen
+        cookbook: winrm
+    transport:
+      name: winrm
+      elvated: true
+
+  - name: windows-2012R2-std # EOL Date: 09 Oct. 2018, can purchese extended Support through 10 Oct 2023
+    driver:
+      image_urn: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest
+      resource_group_tags:
+        project: 'Test-Kitchen'
+        contact: <%= ENV['USER'] %>
+      vm_tags:
+        project: Test Kitchen
+        cookbook: winrm
+    transport:
+      name: winrm
+      elvated: true
+
   - name: windows-2016-std # EOL Date: 11 Jan 2022, can purchase extended support through 11 Jan 2027
     driver:
       image_urn: MicrosoftWindowsServer:WindowsServer:2016-Datacenter-smalldisk:latest

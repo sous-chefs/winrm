@@ -16,6 +16,7 @@ This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of
 
 ### Platforms
 
+- Windows 2012 / 2012 R2
 - Windows 2016
 - Windows 2019
 - Windows 2022
