@@ -12,6 +12,8 @@
 - Update kitchen.yml and kitchen.appveyor.yml to remove EOL'd OS version
 - Add kitchen-azure.yml with all currently supported OS versions.
 - Update README with minimum Chf versions and supported windows versions
+- Remove Appveyor.yml and kitchen.appveyor.yml
+- Remove kitchen-azure.yml
 
 ## 3.0.3 - *2021-08-31*
 

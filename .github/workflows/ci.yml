@@ -11,35 +11,27 @@ jobs:
   lint-unit:
     uses: sous-chefs/.github/.github/workflows/lint-unit.yml@0.0.6
 
-  # integration:
-  #   needs: lint-unit
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       os:
-  #         - 'debian-8'
-  #         - 'debian-9'
-  #         - 'centos-7'
-  #         - 'ubuntu-1604'
-  #         - 'ubuntu-1804'
-  #         - 'opensuse-leap-15'
-  #       suite:
-  #         - 'default'
-  #         - 'basic-site'
-  #         - 'ssl'
-  #         - 'ports'
-  #     fail-fast: false
+  integration-windows:
+    needs: lint-unit
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+        suite:
+          - default
+      fail-fast: false
 
-  #   steps:
-  #     - name: Check out code
-  #       uses: actions/checkout@v2
-  #     - name: Install Chef
-  #       uses: actionshub/chef-install@main
-  #     - name: Dokken
-  #       uses: actionshub/test-kitchen@main
-  #       env:
-  #         CHEF_LICENSE: accept-no-persist
-  #         KITCHEN_LOCAL_YAML: kitchen.dokken.yml
-  #       with:
-  #         suite: ${{ matrix.suite }}
-  #         os: ${{ matrix.os }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Install Chef
+        uses: actionshub/chef-install@main
+      - name: test-kitchen
+        uses: actionshub/test-kitchen@main
+        env:
+          CHEF_LICENSE: accept-no-persist
+          KITCHEN_LOCAL_YAML: kitchen.exec.yml
+        with:
+          suite: ${{ matrix.suite }}
+          os: ${{ matrix.os }}
