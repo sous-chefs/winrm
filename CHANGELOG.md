@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.0.4 - *2023-11-01*
 
 - resolved cookstyle error: metadata.rb:13:1 refactor: `Chef/Modernize/DependsOnWindowsFirewallCookbook`
 - resolved cookstyle error: resources/listener_config.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
