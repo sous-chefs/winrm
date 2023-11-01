@@ -8,4 +8,4 @@ source_url       'https://github.com/sous-chefs/winrm'
 issues_url       'https://github.com/sous-chefs/winrm/issues'
 chef_version     '>= 13.0'
 
-version          '3.0.3'
+version          '3.0.4'
