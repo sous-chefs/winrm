@@ -4,6 +4,7 @@
 
 - resolved cookstyle error: metadata.rb:13:1 refactor: `Chef/Modernize/DependsOnWindowsFirewallCookbook`
 - resolved cookstyle error: resources/listener_config.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
+
 ## 3.0.3 - *2021-08-31*
 
 - Standardise files with files in sous-chefs/repo-management
