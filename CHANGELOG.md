@@ -15,6 +15,14 @@
 - Remove Appveyor.yml and kitchen.appveyor.yml
 - Remove kitchen-azure.yml
 
+## 3.0.5 - *2024-05-06*
+
+## 3.0.4 - *2023-11-01*
+
+- resolved cookstyle error: metadata.rb:13:1 refactor: `Chef/Modernize/DependsOnWindowsFirewallCookbook`
+- resolved cookstyle error: resources/listener_config.rb:1:1 refactor: `Chef/Deprecations/ResourceWithoutUnifiedTrue`
+- Update testing
+
 ## 3.0.3 - *2021-08-31*
 
 - Standardise files with files in sous-chefs/repo-management

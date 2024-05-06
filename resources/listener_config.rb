@@ -21,6 +21,7 @@
 #
 
 provides :winrm_listener_config
+unified_mode true
 provides :winrm # legacy name
 
 property :hostname, String, default: lazy { node['fqdn'] }
