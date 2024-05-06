@@ -1,5 +1,7 @@
 # Changelog
 
+## Unreleased
+
 ## 4.0.0 - *2024-05-06*
 
 - Update ci.yml to use sous-chef reusable workflow
