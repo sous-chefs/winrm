@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.3](https://github.com/sous-chefs/winrm/compare/4.0.2...v4.0.3) (2025-10-16)
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#73](https://github.com/sous-chefs/winrm/issues/73)) ([2278171](https://github.com/sous-chefs/winrm/commit/22781710428871ca1386c53ea2d04fee183ae5da))
+
 ## 4.0.0 - *2024-05-06*
 
 * Update ci.yml to use sous-chef reusable workflow
