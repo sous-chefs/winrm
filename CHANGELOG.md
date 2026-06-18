@@ -1,5 +1,22 @@
 # Changelog
 
+## [5.0.0](https://github.com/sous-chefs/winrm/compare/v4.0.3...v5.0.0) (2026-06-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate winrm custom resources ([#82](https://github.com/sous-chefs/winrm/issues/82))
+
+### Features
+
+* migrate winrm custom resources ([#82](https://github.com/sous-chefs/winrm/issues/82)) ([f78abfd](https://github.com/sous-chefs/winrm/commit/f78abfd12d91251528a34c2ae27864f4409bcd54))
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#73](https://github.com/sous-chefs/winrm/issues/73)) ([2278171](https://github.com/sous-chefs/winrm/commit/22781710428871ca1386c53ea2d04fee183ae5da))
+* match winrm listener transport exactly ([f78abfd](https://github.com/sous-chefs/winrm/commit/f78abfd12d91251528a34c2ae27864f4409bcd54))
+
 ## [4.0.3](https://github.com/sous-chefs/winrm/compare/4.0.2...v4.0.3) (2025-10-16)
 
 
