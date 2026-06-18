@@ -6,14 +6,17 @@ driver:
     cpus: 2
 
 provisioner:
-  name: chef_zero
+  name: cinc_infra
+  product_name: cinc
+  product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
+  channel: stable
+  chef_license: accept
+  deprecations_as_errors: true
+
+verifier:
+  name: inspec
 
 platforms:
-  - name: windows-2012r2
-    driver_config:
-      memory: 2048
-      box: tas50/windows_2012r2
-      vm_hostname: winrm-test
   - name: windows-2016
     driver_config:
       box: tas50/windows_2016
@@ -26,4 +29,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[winrm::default]
+      - recipe[test::default]
+    verifier:
+      inspec_tests:
+        - path: test/integration/default

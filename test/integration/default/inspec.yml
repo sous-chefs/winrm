@@ -1,0 +1,7 @@
+---
+name: default
+title: WinRM Default
+maintainer: Sous Chefs
+license: Apache-2.0
+summary: Verifies WinRM listener configuration
+version: 1.0.0
